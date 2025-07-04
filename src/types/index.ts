@@ -30,3 +30,23 @@ export interface ParseResult {
   errors: string[];
   total: number;
 }
+
+export interface AppConfig {
+  host: string;
+  protocol: 'http' | 'https';
+  includeHeaders: boolean;
+  prettyPrintJson: boolean;
+  defaultContentType: 'application/json' | 'application/x-www-form-urlencoded';
+  timeout: number;
+  followRedirects: boolean;
+}
+
+export const defaultConfig: AppConfig = {
+  host: 'localhost',
+  protocol: 'http',
+  includeHeaders: true,
+  prettyPrintJson: true,
+  defaultContentType: 'application/json',
+  timeout: 30,
+  followRedirects: true,
+};

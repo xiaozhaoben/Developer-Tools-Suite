@@ -1,4 +1,4 @@
-import { NginxLogEntry, CurlCommand, ParseResult } from '../types';
+import { NginxLogEntry, CurlCommand, ParseResult, AppConfig } from '../types';
 
 export class LogParser {
   private static generateId(): string {
@@ -16,77 +16,97 @@ export class LogParser {
     }
   }
 
-  private static buildCurlCommand(entry: NginxLogEntry, host: string = 'localhost'): string {
+  private static buildCurlCommand(entry: NginxLogEntry, config: AppConfig): string {
     const { method, uri, request_body, user_agent, http_referer } = entry;
     
     // Build base curl command
     let curl = `curl -X ${method}`;
     
-    // Add headers
-    if (user_agent) {
-      curl += ` -H "User-Agent: ${user_agent}"`;
+    // Add timeout
+    if (config.timeout && config.timeout > 0) {
+      curl += ` --max-time ${config.timeout}`;
     }
     
-    if (http_referer) {
-      curl += ` -H "Referer: ${http_referer}"`;
+    // Add follow redirects flag
+    if (config.followRedirects) {
+      curl += ` -L`;
     }
     
-    // Add content-type for requests with body - default to JSON
-    if (request_body) {
-      curl += ` -H "Content-Type: application/json"`;
+    // Add headers if enabled
+    if (config.includeHeaders) {
+      if (user_agent) {
+        curl += ` -H "User-Agent: ${user_agent}"`;
+      }
+      
+      if (http_referer) {
+        curl += ` -H "Referer: ${http_referer}"`;
+      }
     }
     
     // Add request body for requests with body
     if (request_body) {
+      // Add content-type header
+      curl += ` -H "Content-Type: ${config.defaultContentType}"`;
+      
       try {
-        // Try to parse URL-encoded body and convert to JSON
+        // Try to parse URL-encoded body and convert based on config
         const decodedBody = decodeURIComponent(request_body);
         
-        // Check if it's URL-encoded form data
-        if (decodedBody.includes('=') && decodedBody.includes('&')) {
-          // Parse URL-encoded data into JSON object
-          const params = new URLSearchParams(decodedBody);
-          const jsonObj: Record<string, any> = {};
-          
-          for (const [key, value] of params.entries()) {
-            // Try to parse JSON values
+        if (config.defaultContentType === 'application/json') {
+          // Convert to JSON format
+          if (decodedBody.includes('=') && decodedBody.includes('&')) {
+            // Parse URL-encoded data into JSON object
+            const params = new URLSearchParams(decodedBody);
+            const jsonObj: Record<string, any> = {};
+            
+            for (const [key, value] of params.entries()) {
+              // Try to parse JSON values
+              try {
+                jsonObj[key] = JSON.parse(value);
+              } catch {
+                jsonObj[key] = value;
+              }
+            }
+            
+            const jsonBody = config.prettyPrintJson 
+              ? JSON.stringify(jsonObj, null, 2)
+              : JSON.stringify(jsonObj);
+            curl += ` --data '${jsonBody}'`;
+          } else {
+            // If it's already JSON or other format, use as is
             try {
-              jsonObj[key] = JSON.parse(value);
+              // Try to parse and format JSON
+              const parsed = JSON.parse(decodedBody);
+              const jsonBody = config.prettyPrintJson 
+                ? JSON.stringify(parsed, null, 2)
+                : JSON.stringify(parsed);
+              curl += ` --data '${jsonBody}'`;
             } catch {
-              jsonObj[key] = value;
+              // If not valid JSON, wrap in quotes and use as string value
+              const jsonBody = config.prettyPrintJson
+                ? JSON.stringify({ data: decodedBody }, null, 2)
+                : JSON.stringify({ data: decodedBody });
+              curl += ` --data '${jsonBody}'`;
             }
           }
-          
-          const jsonBody = JSON.stringify(jsonObj, null, 2);
-          curl += ` --data '${jsonBody}'`;
         } else {
-          // If it's already JSON or other format, use as is
-          try {
-            // Try to parse and pretty-print JSON
-            const parsed = JSON.parse(decodedBody);
-            const prettyJson = JSON.stringify(parsed, null, 2);
-            curl += ` --data '${prettyJson}'`;
-          } catch {
-            // If not valid JSON, wrap in quotes and use as string value
-            const jsonBody = JSON.stringify({ data: decodedBody }, null, 2);
-            curl += ` --data '${jsonBody}'`;
-          }
+          // Use URL-encoded format
+          curl += ` --data '${decodedBody}'`;
         }
       } catch (error) {
-        // Fallback: wrap raw body in JSON
-        const jsonBody = JSON.stringify({ data: request_body }, null, 2);
-        curl += ` --data '${jsonBody}'`;
+        // Fallback: use raw body
+        curl += ` --data '${request_body}'`;
       }
     }
     
     // Determine protocol and format URL
-    const protocol = host.includes('://') ? '' : 'http://';
-    curl += ` "${protocol}${host}${uri}"`;
+    const protocol = config.host.includes('://') ? '' : `${config.protocol}://`;
+    curl += ` "${protocol}${config.host}${uri}"`;
     
     return curl;
   }
 
-  public static parseLogContent(content: string, host: string = 'localhost'): ParseResult {
+  public static parseLogContent(content: string, config: AppConfig): ParseResult {
     const lines = content.split('\n').filter(line => line.trim());
     const commands: CurlCommand[] = [];
     const errors: string[] = [];
@@ -102,7 +122,7 @@ export class LogParser {
       }
       
       try {
-        const curlCommand = this.buildCurlCommand(logEntry, host);
+        const curlCommand = this.buildCurlCommand(logEntry, config);
         commands.push({
           id: this.generateId(),
           original: line,

@@ -3,17 +3,19 @@ import { Header } from './components/Header';
 import { FileUpload } from './components/FileUpload';
 import { TextInput } from './components/TextInput';
 import { ResultsPanel } from './components/ResultsPanel';
-import { HostConfig } from './components/HostConfig';
+import { ConfigPanel } from './components/ConfigPanel';
 import { LogParser } from './utils/logParser';
-import { ParseResult } from './types';
+import { ParseResult, AppConfig, defaultConfig } from './types';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 function App() {
   const [activeTab, setActiveTab] = useState<'upload' | 'paste'>('upload');
   const [parseResult, setParseResult] = useState<ParseResult | null>(null);
-  const [host, setHost] = useState<string>('localhost');
+  const [config, setConfig] = useLocalStorage<AppConfig>('nginx-parser-config', defaultConfig);
+  const [showSaveNotification, setShowSaveNotification] = useState(false);
 
   const handleLogContent = (content: string) => {
-    const result = LogParser.parseLogContent(content, host);
+    const result = LogParser.parseLogContent(content, config);
     setParseResult(result);
   };
 
@@ -21,9 +23,28 @@ function App() {
     setParseResult(null);
   };
 
+  const handleConfigSave = () => {
+    // Config is automatically saved via useLocalStorage
+    setShowSaveNotification(true);
+    setTimeout(() => setShowSaveNotification(false), 2000);
+  };
+
+  const handleConfigReset = () => {
+    setConfig(defaultConfig);
+    setShowSaveNotification(true);
+    setTimeout(() => setShowSaveNotification(false), 2000);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
+      
+      {/* Save Notification */}
+      {showSaveNotification && (
+        <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-fade-in">
+          Settings saved successfully!
+        </div>
+      )}
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -73,8 +94,13 @@ function App() {
               </div>
             </div>
             
-            {/* Host Configuration */}
-            <HostConfig host={host} onHostChange={setHost} />
+            {/* Configuration Panel */}
+            <ConfigPanel 
+              config={config}
+              onConfigChange={setConfig}
+              onSave={handleConfigSave}
+              onReset={handleConfigReset}
+            />
             
             {/* Info Panel */}
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
