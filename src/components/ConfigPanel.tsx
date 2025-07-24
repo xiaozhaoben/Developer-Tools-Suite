@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Settings, ChevronDown, ChevronUp, Save, RotateCcw, Globe, Shield, Clock, Code } from 'lucide-react';
 import { AppConfig } from '../types';
+import { useTranslation } from 'react-i18next';
 
 interface ConfigPanelProps {
   config: AppConfig;
@@ -15,6 +16,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
   onSave, 
   onReset 
 }) => {
+  const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleChange = (key: keyof AppConfig, value: any) => {
@@ -32,7 +34,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
       >
         <div className="flex items-center gap-2">
           <Settings className="w-5 h-5 text-gray-600" />
-          <span className="font-medium text-gray-900">Advanced Configuration</span>
+          <span className="font-medium text-gray-900">{t('advanced_configuration')}</span>
         </div>
         {isExpanded ? (
           <ChevronUp className="w-4 h-4 text-gray-500" />
@@ -47,17 +49,17 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
               <Globe className="w-4 h-4" />
-              Target Host
+              {t('target_host')}
             </label>
             <input
               type="text"
               value={config.host}
               onChange={(e) => handleChange('host', e.target.value)}
-              placeholder="localhost:3000"
+              placeholder={t('target_host_placeholder')}
               className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             <p className="text-xs text-gray-500">
-              The host/domain to use in generated curl commands
+              {t('target_host_desc')}
             </p>
           </div>
 
@@ -65,7 +67,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
               <Shield className="w-4 h-4" />
-              Protocol
+              {t('protocol')}
             </label>
             <div className="flex gap-2">
               <label className="flex items-center">
@@ -97,7 +99,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
               <Code className="w-4 h-4" />
-              Default Content Type
+              {t('default_content_type')}
             </label>
             <select
               value={config.defaultContentType}
@@ -113,7 +115,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
               <Clock className="w-4 h-4" />
-              Timeout (seconds)
+              {t('timeout_seconds')}
             </label>
             <input
               type="number"
@@ -134,7 +136,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                 onChange={(e) => handleChange('includeHeaders', e.target.checked)}
                 className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
-              <span className="text-sm text-gray-700">Include original headers</span>
+              <span className="text-sm text-gray-700">{t('include_original_headers')}</span>
             </label>
 
             <label className="flex items-center gap-2">
@@ -144,7 +146,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                 onChange={(e) => handleChange('prettyPrintJson', e.target.checked)}
                 className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
-              <span className="text-sm text-gray-700">Pretty print JSON</span>
+              <span className="text-sm text-gray-700">{t('pretty_print_json')}</span>
             </label>
 
             <label className="flex items-center gap-2">
@@ -154,7 +156,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                 onChange={(e) => handleChange('followRedirects', e.target.checked)}
                 className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
-              <span className="text-sm text-gray-700">Follow redirects (-L flag)</span>
+              <span className="text-sm text-gray-700">{t('follow_redirects')}</span>
             </label>
           </div>
 
@@ -165,7 +167,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
               className="flex items-center gap-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors"
             >
               <Save className="w-4 h-4" />
-              Save Settings
+              {t('save_settings')}
             </button>
             
             <button
@@ -173,7 +175,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
               className="flex items-center gap-1 px-3 py-2 bg-gray-600 text-white text-sm rounded-md hover:bg-gray-700 transition-colors"
             >
               <RotateCcw className="w-4 h-4" />
-              Reset to Default
+              {t('reset_to_default')}
             </button>
           </div>
         </div>

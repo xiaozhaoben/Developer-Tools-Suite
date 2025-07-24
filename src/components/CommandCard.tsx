@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Copy, Check, Eye, EyeOff, Code, Globe, Clock, Activity } from 'lucide-react';
 import { CurlCommand } from '../types';
+import { useTranslation } from 'react-i18next';
 
 interface CommandCardProps {
   command: CurlCommand;
@@ -8,6 +9,7 @@ interface CommandCardProps {
 }
 
 export const CommandCard: React.FC<CommandCardProps> = ({ command, index }) => {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const [showOriginal, setShowOriginal] = useState(false);
 
@@ -56,7 +58,7 @@ export const CommandCard: React.FC<CommandCardProps> = ({ command, index }) => {
           <button
             onClick={() => setShowOriginal(!showOriginal)}
             className="p-1 text-gray-500 hover:text-gray-700 transition-colors"
-            title={showOriginal ? 'Hide original log' : 'Show original log'}
+            title={showOriginal ? t('hide_original_log') : t('show_original_log')}
           >
             {showOriginal ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
           </button>
@@ -66,7 +68,7 @@ export const CommandCard: React.FC<CommandCardProps> = ({ command, index }) => {
             className="flex items-center gap-1 px-3 py-1 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors"
           >
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-            {copied ? 'Copied!' : 'Copy'}
+            {copied ? t('copied') : t('copy')}
           </button>
         </div>
       </div>
@@ -85,7 +87,7 @@ export const CommandCard: React.FC<CommandCardProps> = ({ command, index }) => {
         <div className="bg-gray-50 rounded-lg p-4">
           <div className="flex items-center gap-2 mb-2">
             <Code className="w-4 h-4 text-gray-600" />
-            <span className="text-sm font-medium text-gray-700">Curl Command</span>
+            <span className="text-sm font-medium text-gray-700">{t('curl_command')}</span>
           </div>
           <pre className="text-sm font-mono text-gray-800 whitespace-pre-wrap break-all">
             {command.curl}
@@ -96,7 +98,7 @@ export const CommandCard: React.FC<CommandCardProps> = ({ command, index }) => {
           <div className="bg-gray-50 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-2">
               <Activity className="w-4 h-4 text-gray-600" />
-              <span className="text-sm font-medium text-gray-700">Original Log</span>
+              <span className="text-sm font-medium text-gray-700">{t('original_log')}</span>
             </div>
             <pre className="text-xs font-mono text-gray-600 whitespace-pre-wrap break-all">
               {command.original}

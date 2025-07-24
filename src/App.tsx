@@ -3,22 +3,24 @@ import { Header } from './components/Header';
 import { NginxLogParser } from './components/NginxLogParser';
 import { StringManipulator } from './components/StringManipulator';
 import { Terminal, Type } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 function App() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'nginx' | 'string'>('nginx');
 
   const tabs = [
     {
       id: 'nginx' as const,
-      name: 'Nginx Log Parser',
+      name: t('nginx_log_parser'),
       icon: Terminal,
-      description: 'Convert nginx logs to curl commands'
+      description: t('nginx_log_parser_desc')
     },
     {
       id: 'string' as const,
-      name: 'String Manipulator',
+      name: t('string_manipulator'),
       icon: Type,
-      description: 'Add custom characters to strings'
+      description: t('string_manipulator_desc')
     }
   ];
 

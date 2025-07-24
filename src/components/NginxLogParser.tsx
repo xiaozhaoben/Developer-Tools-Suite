@@ -6,8 +6,10 @@ import { ConfigPanel } from './ConfigPanel';
 import { LogParser } from '../utils/logParser';
 import { ParseResult, AppConfig, defaultConfig } from '../types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useTranslation } from 'react-i18next';
 
 export const NginxLogParser: React.FC = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'upload' | 'paste'>('upload');
   const [parseResult, setParseResult] = useState<ParseResult | null>(null);
   const [config, setConfig] = useLocalStorage<AppConfig>('nginx-parser-config', defaultConfig);
@@ -39,7 +41,7 @@ export const NginxLogParser: React.FC = () => {
       {/* Save Notification */}
       {showSaveNotification && (
         <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-fade-in">
-          Settings saved successfully!
+          {t('settings_saved_successfully')}
         </div>
       )}
       
@@ -49,10 +51,10 @@ export const NginxLogParser: React.FC = () => {
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="mb-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-2">
-                Import Nginx Logs
+                {t('import_nginx_logs')}
               </h2>
               <p className="text-sm text-gray-600">
-                Upload a log file or paste log content to generate curl commands
+                {t('upload_log_file_or_paste_log_content')}
               </p>
             </div>
             
@@ -66,7 +68,7 @@ export const NginxLogParser: React.FC = () => {
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                Upload File
+                {t('upload_file')}
               </button>
               <button
                 onClick={() => setActiveTab('paste')}
@@ -76,7 +78,7 @@ export const NginxLogParser: React.FC = () => {
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                Paste Content
+                {t('paste_content')}
               </button>
             </div>
             
@@ -100,9 +102,9 @@ export const NginxLogParser: React.FC = () => {
           
           {/* Info Panel */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h3 className="font-medium text-blue-900 mb-2">Supported Format</h3>
+            <h3 className="font-medium text-blue-900 mb-2">{t('supported_format')}</h3>
             <p className="text-sm text-blue-800 mb-2">
-              This parser supports JSON-formatted nginx logs with the following fields:
+              {t('supported_format_desc')}
             </p>
             <ul className="text-xs text-blue-700 space-y-1">
               <li>• method, uri, request_body</li>
@@ -127,10 +129,10 @@ export const NginxLogParser: React.FC = () => {
                 </svg>
               </div>
               <h3 className="text-lg font-medium text-gray-900 mb-2">
-                No logs processed yet
+                {t('no_logs_processed_yet')}
               </h3>
               <p className="text-gray-600">
-                Upload a log file or paste log content to see the generated curl commands here.
+                {t('no_logs_processed_yet_desc')}
               </p>
             </div>
           )}

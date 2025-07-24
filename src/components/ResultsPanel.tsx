@@ -2,6 +2,7 @@ import React from 'react';
 import { Download, Copy, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 import { ParseResult } from '../types';
 import { CommandCard } from './CommandCard';
+import { useTranslation } from 'react-i18next';
 
 interface ResultsPanelProps {
   result: ParseResult;
@@ -9,6 +10,8 @@ interface ResultsPanelProps {
 }
 
 export const ResultsPanel: React.FC<ResultsPanelProps> = ({ result, onClearResults }) => {
+  const { t } = useTranslation();
+  
   const handleDownloadAll = () => {
     const content = result.commands.map(cmd => cmd.curl).join('\n\n');
     const blob = new Blob([content], { type: 'text/plain' });
@@ -36,12 +39,12 @@ export const ResultsPanel: React.FC<ResultsPanelProps> = ({ result, onClearResul
       {/* Summary */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">Parse Results</h2>
+          <h2 className="text-lg font-semibold text-gray-900">{t('parse_results')}</h2>
           <button
             onClick={onClearResults}
             className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
           >
-            Clear Results
+            {t('clear_results')}
           </button>
         </div>
         
@@ -49,21 +52,21 @@ export const ResultsPanel: React.FC<ResultsPanelProps> = ({ result, onClearResul
           <div className="flex items-center gap-2">
             <CheckCircle className="w-5 h-5 text-green-500" />
             <span className="text-sm text-gray-600">
-              {result.commands.length} commands generated
+              {t('commands_generated', { count: result.commands.length })}
             </span>
           </div>
           
           <div className="flex items-center gap-2">
             <XCircle className="w-5 h-5 text-red-500" />
             <span className="text-sm text-gray-600">
-              {result.errors.length} errors
+              {t('errors', { count: result.errors.length })}
             </span>
           </div>
           
           <div className="flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-yellow-500" />
             <span className="text-sm text-gray-600">
-              {result.total} total lines processed
+              {t('total_lines_processed', { count: result.total })}
             </span>
           </div>
         </div>
@@ -75,7 +78,7 @@ export const ResultsPanel: React.FC<ResultsPanelProps> = ({ result, onClearResul
               className="flex items-center gap-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors"
             >
               <Copy className="w-4 h-4" />
-              Copy All
+              {t('copy_all')}
             </button>
             
             <button
@@ -83,7 +86,7 @@ export const ResultsPanel: React.FC<ResultsPanelProps> = ({ result, onClearResul
               className="flex items-center gap-1 px-3 py-2 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 transition-colors"
             >
               <Download className="w-4 h-4" />
-              Download All
+              {t('download')}
             </button>
           </div>
         )}
@@ -94,7 +97,7 @@ export const ResultsPanel: React.FC<ResultsPanelProps> = ({ result, onClearResul
         <div className="bg-red-50 border border-red-200 rounded-lg p-4">
           <div className="flex items-center gap-2 mb-2">
             <XCircle className="w-5 h-5 text-red-500" />
-            <span className="font-medium text-red-800">Parsing Errors</span>
+            <span className="font-medium text-red-800">{t('parsing_errors')}</span>
           </div>
           <ul className="space-y-1">
             {result.errors.map((error, index) => (
@@ -110,7 +113,7 @@ export const ResultsPanel: React.FC<ResultsPanelProps> = ({ result, onClearResul
       {result.commands.length > 0 && (
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-gray-900">
-            Generated Curl Commands ({result.commands.length})
+            {t('generated_curl_commands', { count: result.commands.length })}
           </h3>
           
           <div className="space-y-4">
