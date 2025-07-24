@@ -1,5 +1,5 @@
 import React from 'react';
-import { Terminal, Github, Code } from 'lucide-react';
+import { Wrench, Code } from 'lucide-react';
 
 export const Header: React.FC = () => {
   return (
@@ -8,14 +8,14 @@ export const Header: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-blue-600 rounded-lg">
-              <Terminal className="w-6 h-6 text-white" />
+              <Wrench className="w-6 h-6 text-white" />
             </div>
             <div>
               <h1 className="text-xl font-semibold text-gray-900">
-                Nginx Log Parser
+                Developer Tools Suite
               </h1>
               <p className="text-sm text-gray-600">
-                Convert nginx logs to curl commands
+                Essential tools for developers
               </p>
             </div>
           </div>
