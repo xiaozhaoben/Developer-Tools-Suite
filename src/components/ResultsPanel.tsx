@@ -37,12 +37,12 @@ export const ResultsPanel: React.FC<ResultsPanelProps> = ({ result, onClearResul
   return (
     <div className="space-y-6">
       {/* Summary */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 dark:bg-dark-800 dark:border-dark-700">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">{t('parse_results')}</h2>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('parse_results')}</h2>
           <button
             onClick={onClearResults}
-            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+            className="text-sm text-gray-500 hover:text-gray-700 transition-colors dark:text-dark-400 dark:hover:text-dark-300"
           >
             {t('clear_results')}
           </button>
@@ -50,22 +50,22 @@ export const ResultsPanel: React.FC<ResultsPanelProps> = ({ result, onClearResul
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <div className="flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-green-500" />
-            <span className="text-sm text-gray-600">
+            <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-400" />
+            <span className="text-sm text-gray-600 dark:text-dark-300">
               {t('commands_generated', { count: result.commands.length })}
             </span>
           </div>
           
           <div className="flex items-center gap-2">
-            <XCircle className="w-5 h-5 text-red-500" />
-            <span className="text-sm text-gray-600">
+            <XCircle className="w-5 h-5 text-red-500 dark:text-red-400" />
+            <span className="text-sm text-gray-600 dark:text-dark-300">
               {t('errors', { count: result.errors.length })}
             </span>
           </div>
           
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-yellow-500" />
-            <span className="text-sm text-gray-600">
+            <AlertTriangle className="w-5 h-5 text-yellow-500 dark:text-yellow-400" />
+            <span className="text-sm text-gray-600 dark:text-dark-300">
               {t('total_lines_processed', { count: result.total })}
             </span>
           </div>
@@ -75,7 +75,7 @@ export const ResultsPanel: React.FC<ResultsPanelProps> = ({ result, onClearResul
           <div className="flex gap-2">
             <button
               onClick={handleCopyAll}
-              className="flex items-center gap-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors"
+              className="flex items-center gap-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors dark:bg-blue-700 dark:hover:bg-blue-600"
             >
               <Copy className="w-4 h-4" />
               {t('copy_all')}
@@ -83,7 +83,7 @@ export const ResultsPanel: React.FC<ResultsPanelProps> = ({ result, onClearResul
             
             <button
               onClick={handleDownloadAll}
-              className="flex items-center gap-1 px-3 py-2 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 transition-colors"
+              className="flex items-center gap-1 px-3 py-2 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 transition-colors dark:bg-green-700 dark:hover:bg-green-600"
             >
               <Download className="w-4 h-4" />
               {t('download')}
@@ -94,14 +94,14 @@ export const ResultsPanel: React.FC<ResultsPanelProps> = ({ result, onClearResul
       
       {/* Errors */}
       {result.errors.length > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 dark:bg-red-900/20 dark:border-red-800">
           <div className="flex items-center gap-2 mb-2">
-            <XCircle className="w-5 h-5 text-red-500" />
-            <span className="font-medium text-red-800">{t('parsing_errors')}</span>
+            <XCircle className="w-5 h-5 text-red-500 dark:text-red-400" />
+            <span className="font-medium text-red-800 dark:text-red-300">{t('parsing_errors')}</span>
           </div>
           <ul className="space-y-1">
             {result.errors.map((error, index) => (
-              <li key={index} className="text-sm text-red-700">
+              <li key={index} className="text-sm text-red-700 dark:text-red-300">
                 • {error}
               </li>
             ))}
@@ -112,7 +112,7 @@ export const ResultsPanel: React.FC<ResultsPanelProps> = ({ result, onClearResul
       {/* Commands */}
       {result.commands.length > 0 && (
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
             {t('generated_curl_commands', { count: result.commands.length })}
           </h3>
           

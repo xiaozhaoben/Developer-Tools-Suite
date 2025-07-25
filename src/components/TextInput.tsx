@@ -24,7 +24,7 @@ export const TextInput: React.FC<TextInputProps> = ({ onTextContent }) => {
 
   return (
     <div className="w-full space-y-4">
-      <div className="flex items-center gap-2 text-gray-700">
+      <div className="flex items-center gap-2 text-gray-700 dark:text-dark-300">
         <Code className="w-5 h-5" />
         <span className="font-medium">{t('paste_nginx_log_content')}</span>
       </div>
@@ -35,10 +35,10 @@ export const TextInput: React.FC<TextInputProps> = ({ onTextContent }) => {
           onChange={(e) => setContent(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={t('paste_nginx_log_content_placeholder')}
-          className="w-full h-40 p-4 border border-gray-300 rounded-lg font-mono text-sm resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full h-40 p-4 border border-gray-300 rounded-lg font-mono text-sm resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-dark-700 dark:border-dark-600 dark:text-white"
         />
         
-        <div className="absolute bottom-2 right-2 text-xs text-gray-400">
+        <div className="absolute bottom-2 right-2 text-xs text-gray-400 dark:text-dark-500">
           {t('ctrl_enter_to_parse')}
         </div>
       </div>
@@ -46,7 +46,7 @@ export const TextInput: React.FC<TextInputProps> = ({ onTextContent }) => {
       <button
         onClick={handleSubmit}
         disabled={!content.trim()}
-        className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+        className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 dark:bg-blue-700 dark:hover:bg-blue-600"
       >
         <Zap className="w-4 h-4" />
         {t('parse_logs')}

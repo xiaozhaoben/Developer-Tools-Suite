@@ -84,13 +84,13 @@ export const StringManipulator: React.FC = () => {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       {/* Input Section */}
       <div className="space-y-6">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 dark:bg-dark-800 dark:border-dark-700">
           <div className="flex items-center gap-2 mb-4">
-            <Type className="w-5 h-5 text-blue-600" />
-            <h2 className="text-lg font-semibold text-gray-900">{t('string_manipulator_title')}</h2>
+            <Type className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('string_manipulator_title')}</h2>
           </div>
           
-          <p className="text-sm text-gray-600 mb-6">
+          <p className="text-sm text-gray-600 mb-6 dark:text-dark-300">
             {t('string_manipulator_desc2')}
           </p>
 
@@ -98,27 +98,27 @@ export const StringManipulator: React.FC = () => {
           <div className="space-y-4 mb-6">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-dark-300">
                   {t('left_character')}
                 </label>
                 <input
                   type="text"
                   value={leftChar}
                   onChange={(e) => setLeftChar(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-dark-700 dark:border-dark-600 dark:text-white"
                   placeholder={t('enter_left_character')}
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-dark-300">
                   {t('right_character')}
                 </label>
                 <input
                   type="text"
                   value={rightChar}
                   onChange={(e) => setRightChar(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-dark-700 dark:border-dark-600 dark:text-white"
                   placeholder={t('enter_right_character')}
                 />
               </div>
@@ -126,7 +126,7 @@ export const StringManipulator: React.FC = () => {
 
             {/* Preset Options */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-dark-300">
                 {t('quick_presets')}
               </label>
               <div className="flex flex-wrap gap-2">
@@ -134,7 +134,7 @@ export const StringManipulator: React.FC = () => {
                   <button
                     key={index}
                     onClick={() => handlePresetSelect(preset)}
-                    className="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+                    className="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors dark:bg-dark-700 dark:text-dark-300 dark:hover:bg-dark-600"
                   >
                     {preset.name}
                   </button>
@@ -145,24 +145,24 @@ export const StringManipulator: React.FC = () => {
 
           {/* Preview */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-dark-300">
               {t('preview_format')}
             </label>
-            <div className="bg-gray-50 rounded-md p-3 font-mono text-sm text-gray-800">
-              {leftChar}<span className="text-blue-600">{t('your_text_here')}</span>{rightChar}
+            <div className="bg-gray-50 rounded-md p-3 font-mono text-sm text-gray-800 dark:bg-dark-700 dark:text-dark-300">
+              {leftChar}<span className="text-blue-600 dark:text-blue-400">{t('your_text_here')}</span>{rightChar}
             </div>
           </div>
 
           {/* Input Text Area */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-dark-300">
               {t('input_text')}
             </label>
             <textarea
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder={getPlaceholderText()}
-              className="w-full h-48 p-4 border border-gray-300 rounded-lg text-sm resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full h-48 p-4 border border-gray-300 rounded-lg text-sm resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-dark-700 dark:border-dark-600 dark:text-white"
             />
           </div>
 
@@ -171,7 +171,7 @@ export const StringManipulator: React.FC = () => {
             <button
               onClick={handleProcess}
               disabled={!inputText.trim()}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors dark:bg-blue-700 dark:hover:bg-blue-600"
             >
               <Zap className="w-4 h-4" />
               {t('process_text')}
@@ -179,7 +179,7 @@ export const StringManipulator: React.FC = () => {
             
             <button
               onClick={handleClear}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors dark:bg-dark-600 dark:hover:bg-dark-500"
             >
               <RotateCcw className="w-4 h-4" />
               {t('clear_all')}
@@ -188,9 +188,9 @@ export const StringManipulator: React.FC = () => {
         </div>
 
         {/* Info Panel */}
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-          <h3 className="font-medium text-green-900 mb-2">{t('how_to_use')}</h3>
-          <ul className="text-sm text-green-800 space-y-1">
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4 dark:bg-green-900/20 dark:border-green-800">
+          <h3 className="font-medium text-green-900 mb-2 dark:text-green-300">{t('how_to_use')}</h3>
+          <ul className="text-sm text-green-800 space-y-1 dark:text-green-200">
             <li>• {t('how_to_use_item1')}</li>
             <li>• {t('how_to_use_item2')}</li>
             <li>• {t('how_to_use_item3')}</li>
@@ -202,16 +202,16 @@ export const StringManipulator: React.FC = () => {
       {/* Results Section */}
       <div className="space-y-6">
         {result.length > 0 ? (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 dark:bg-dark-800 dark:border-dark-700">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 {t('processed_results', { count: result.length })}
               </h3>
               
               <div className="flex gap-2">
                 <button
                   onClick={handleCopy}
-                  className="flex items-center gap-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors"
+                  className="flex items-center gap-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors dark:bg-blue-700 dark:hover:bg-blue-600"
                 >
                   {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                   {copied ? t('copied') : t('copy_all')}
@@ -219,7 +219,7 @@ export const StringManipulator: React.FC = () => {
                 
                 <button
                   onClick={handleDownload}
-                  className="flex items-center gap-1 px-3 py-2 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 transition-colors"
+                  className="flex items-center gap-1 px-3 py-2 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 transition-colors dark:bg-green-700 dark:hover:bg-green-600"
                 >
                   <Download className="w-4 h-4" />
                   {t('download')}
@@ -227,21 +227,21 @@ export const StringManipulator: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-gray-50 rounded-lg p-4 max-h-96 overflow-y-auto">
-              <pre className="text-sm font-mono text-gray-800 whitespace-pre-wrap">
+            <div className="bg-gray-50 rounded-lg p-4 max-h-96 overflow-y-auto dark:bg-dark-700">
+              <pre className="text-sm font-mono text-gray-800 whitespace-pre-wrap dark:text-dark-300">
                 {result.join('\n')}
               </pre>
             </div>
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-            <div className="text-gray-400 mb-4">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center dark:bg-dark-800 dark:border-dark-700">
+            <div className="text-gray-400 mb-4 dark:text-dark-500">
               <Type className="w-16 h-16 mx-auto" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-lg font-medium text-gray-900 mb-2 dark:text-white">
               {t('no_text_processed_yet')}
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-dark-300">
               {t('no_text_processed_yet_desc')}
             </p>
           </div>

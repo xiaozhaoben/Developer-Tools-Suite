@@ -27,27 +27,27 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 dark:bg-dark-800 dark:border-dark-700">
       <div 
-        className="p-4 cursor-pointer flex items-center justify-between hover:bg-gray-50 transition-colors"
+        className="p-4 cursor-pointer flex items-center justify-between hover:bg-gray-50 transition-colors dark:hover:bg-dark-700"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center gap-2">
-          <Settings className="w-5 h-5 text-gray-600" />
-          <span className="font-medium text-gray-900">{t('advanced_configuration')}</span>
+          <Settings className="w-5 h-5 text-gray-600 dark:text-dark-400" />
+          <span className="font-medium text-gray-900 dark:text-white">{t('advanced_configuration')}</span>
         </div>
         {isExpanded ? (
-          <ChevronUp className="w-4 h-4 text-gray-500" />
+          <ChevronUp className="w-4 h-4 text-gray-500 dark:text-dark-400" />
         ) : (
-          <ChevronDown className="w-4 h-4 text-gray-500" />
+          <ChevronDown className="w-4 h-4 text-gray-500 dark:text-dark-400" />
         )}
       </div>
       
       {isExpanded && (
-        <div className="px-4 pb-4 space-y-4 border-t border-gray-100">
+        <div className="px-4 pb-4 space-y-4 border-t border-gray-100 dark:border-dark-700">
           {/* Host Configuration */}
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-dark-300">
               <Globe className="w-4 h-4" />
               {t('target_host')}
             </label>
@@ -56,21 +56,21 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
               value={config.host}
               onChange={(e) => handleChange('host', e.target.value)}
               placeholder={t('target_host_placeholder')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-dark-700 dark:border-dark-600 dark:text-white"
             />
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-500 dark:text-dark-500">
               {t('target_host_desc')}
             </p>
           </div>
 
           {/* Protocol Selection */}
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-dark-300">
               <Shield className="w-4 h-4" />
               {t('protocol')}
             </label>
             <div className="flex gap-2">
-              <label className="flex items-center">
+              <label className="flex items-center dark:text-dark-300">
                 <input
                   type="radio"
                   name="protocol"
@@ -81,7 +81,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                 />
                 <span className="text-sm">HTTP</span>
               </label>
-              <label className="flex items-center">
+              <label className="flex items-center dark:text-dark-300">
                 <input
                   type="radio"
                   name="protocol"
@@ -97,14 +97,14 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
 
           {/* Content Type */}
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-dark-300">
               <Code className="w-4 h-4" />
               {t('default_content_type')}
             </label>
             <select
               value={config.defaultContentType}
               onChange={(e) => handleChange('defaultContentType', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-dark-700 dark:border-dark-600 dark:text-white"
             >
               <option value="application/json">application/json</option>
               <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
@@ -113,7 +113,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
 
           {/* Timeout */}
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-dark-300">
               <Clock className="w-4 h-4" />
               {t('timeout_seconds')}
             </label>
@@ -123,7 +123,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
               max="300"
               value={config.timeout}
               onChange={(e) => handleChange('timeout', parseInt(e.target.value) || 30)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-dark-700 dark:border-dark-600 dark:text-white"
             />
           </div>
 
@@ -134,9 +134,9 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                 type="checkbox"
                 checked={config.includeHeaders}
                 onChange={(e) => handleChange('includeHeaders', e.target.checked)}
-                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:bg-dark-700 dark:border-dark-600"
               />
-              <span className="text-sm text-gray-700">{t('include_original_headers')}</span>
+              <span className="text-sm text-gray-700 dark:text-dark-300">{t('include_original_headers')}</span>
             </label>
 
             <label className="flex items-center gap-2">
@@ -144,9 +144,9 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                 type="checkbox"
                 checked={config.prettyPrintJson}
                 onChange={(e) => handleChange('prettyPrintJson', e.target.checked)}
-                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:bg-dark-700 dark:border-dark-600"
               />
-              <span className="text-sm text-gray-700">{t('pretty_print_json')}</span>
+              <span className="text-sm text-gray-700 dark:text-dark-300">{t('pretty_print_json')}</span>
             </label>
 
             <label className="flex items-center gap-2">
@@ -154,17 +154,17 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                 type="checkbox"
                 checked={config.followRedirects}
                 onChange={(e) => handleChange('followRedirects', e.target.checked)}
-                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:bg-dark-700 dark:border-dark-600"
               />
-              <span className="text-sm text-gray-700">{t('follow_redirects')}</span>
+              <span className="text-sm text-gray-700 dark:text-dark-300">{t('follow_redirects')}</span>
             </label>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-2 pt-2 border-t border-gray-100">
+          <div className="flex gap-2 pt-2 border-t border-gray-100 dark:border-dark-700">
             <button
               onClick={onSave}
-              className="flex items-center gap-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors"
+              className="flex items-center gap-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors dark:bg-blue-700 dark:hover:bg-blue-600"
             >
               <Save className="w-4 h-4" />
               {t('save_settings')}
@@ -172,7 +172,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
             
             <button
               onClick={onReset}
-              className="flex items-center gap-1 px-3 py-2 bg-gray-600 text-white text-sm rounded-md hover:bg-gray-700 transition-colors"
+              className="flex items-center gap-1 px-3 py-2 bg-gray-600 text-white text-sm rounded-md hover:bg-gray-700 transition-colors dark:bg-dark-600 dark:hover:bg-dark-500"
             >
               <RotateCcw className="w-4 h-4" />
               {t('reset_to_default')}

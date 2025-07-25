@@ -25,27 +25,27 @@ export const CommandCard: React.FC<CommandCardProps> = ({ command, index }) => {
 
   const getMethodColor = (method: string) => {
     switch (method.toLowerCase()) {
-      case 'get': return 'bg-green-100 text-green-800';
-      case 'post': return 'bg-blue-100 text-blue-800';
-      case 'put': return 'bg-yellow-100 text-yellow-800';
-      case 'delete': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'get': return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400';
+      case 'post': return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400';
+      case 'put': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400';
+      case 'delete': return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400';
+      default: return 'bg-gray-100 text-gray-800 dark:bg-dark-700 dark:text-dark-300';
     }
   };
 
   const getStatusColor = (status: string) => {
     const statusNum = parseInt(status);
-    if (statusNum >= 200 && statusNum < 300) return 'text-green-600';
-    if (statusNum >= 300 && statusNum < 400) return 'text-yellow-600';
-    if (statusNum >= 400) return 'text-red-600';
-    return 'text-gray-600';
+    if (statusNum >= 200 && statusNum < 300) return 'text-green-600 dark:text-green-400';
+    if (statusNum >= 300 && statusNum < 400) return 'text-yellow-600 dark:text-yellow-400';
+    if (statusNum >= 400) return 'text-red-600 dark:text-red-400';
+    return 'text-gray-600 dark:text-dark-400';
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow dark:bg-dark-800 dark:border-dark-700 dark:hover:shadow-dark-800/20">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
-          <span className="text-sm font-medium text-gray-500">#{index + 1}</span>
+          <span className="text-sm font-medium text-gray-500 dark:text-dark-400">#{index + 1}</span>
           <span className={`px-2 py-1 text-xs font-medium rounded-full ${getMethodColor(command.method)}`}>
             {command.method}
           </span>
@@ -57,7 +57,7 @@ export const CommandCard: React.FC<CommandCardProps> = ({ command, index }) => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setShowOriginal(!showOriginal)}
-            className="p-1 text-gray-500 hover:text-gray-700 transition-colors"
+            className="p-1 text-gray-500 hover:text-gray-700 transition-colors dark:text-dark-400 dark:hover:text-dark-300"
             title={showOriginal ? t('hide_original_log') : t('show_original_log')}
           >
             {showOriginal ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -65,7 +65,7 @@ export const CommandCard: React.FC<CommandCardProps> = ({ command, index }) => {
           
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1 px-3 py-1 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-1 px-3 py-1 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors dark:bg-blue-700 dark:hover:bg-blue-600"
           >
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             {copied ? t('copied') : t('copy')}
@@ -74,33 +74,33 @@ export const CommandCard: React.FC<CommandCardProps> = ({ command, index }) => {
       </div>
       
       <div className="space-y-3">
-        <div className="flex items-center gap-2 text-sm text-gray-600">
+        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-dark-300">
           <Globe className="w-4 h-4" />
           <span className="font-mono break-all">{command.url}</span>
         </div>
         
-        <div className="flex items-center gap-2 text-sm text-gray-600">
+        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-dark-300">
           <Clock className="w-4 h-4" />
           <span>{command.timestamp}</span>
         </div>
         
-        <div className="bg-gray-50 rounded-lg p-4">
+        <div className="bg-gray-50 rounded-lg p-4 dark:bg-dark-700">
           <div className="flex items-center gap-2 mb-2">
-            <Code className="w-4 h-4 text-gray-600" />
-            <span className="text-sm font-medium text-gray-700">{t('curl_command')}</span>
+            <Code className="w-4 h-4 text-gray-600 dark:text-dark-400" />
+            <span className="text-sm font-medium text-gray-700 dark:text-dark-300">{t('curl_command')}</span>
           </div>
-          <pre className="text-sm font-mono text-gray-800 whitespace-pre-wrap break-all">
+          <pre className="text-sm font-mono text-gray-800 whitespace-pre-wrap break-all dark:text-dark-300">
             {command.curl}
           </pre>
         </div>
         
         {showOriginal && (
-          <div className="bg-gray-50 rounded-lg p-4">
+          <div className="bg-gray-50 rounded-lg p-4 dark:bg-dark-700">
             <div className="flex items-center gap-2 mb-2">
-              <Activity className="w-4 h-4 text-gray-600" />
-              <span className="text-sm font-medium text-gray-700">{t('original_log')}</span>
+              <Activity className="w-4 h-4 text-gray-600 dark:text-dark-400" />
+              <span className="text-sm font-medium text-gray-700 dark:text-dark-300">{t('original_log')}</span>
             </div>
-            <pre className="text-xs font-mono text-gray-600 whitespace-pre-wrap break-all">
+            <pre className="text-xs font-mono text-gray-600 whitespace-pre-wrap break-all dark:text-dark-400">
               {command.original}
             </pre>
           </div>
