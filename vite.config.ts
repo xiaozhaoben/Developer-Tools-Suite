@@ -14,10 +14,7 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          i18n: ['i18next', 'react-i18next']
-        },
+        manualChunks: undefined,
       },
     },
   },
